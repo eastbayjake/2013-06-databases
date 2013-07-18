@@ -11,7 +11,7 @@ var sequelize = new Sequelize("chat", "root", "MYSQL123");
 /* first define the data structure by giving property names and datatypes
  * See http://sequelizejs.com for other datatypes you can use besides STRING. */
 var User = sequelize.define('User', {
-  user_name: Sequelize.STRING,
+  user_name: Sequelize.STRING
 });
 
 /* .sync() makes Sequelize create the database table for us if it doesn't

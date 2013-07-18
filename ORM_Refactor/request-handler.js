@@ -46,7 +46,7 @@ var handleRequest = function(request, response) {
 
   if (request.method === "GET" && request.url === '/classes/room1') {
     response.writeHead(200, headers);
-    server.db("SELECT * from messages;", function(err, rows, fields) {
+    server.get(function(err, rows, fields) {
       response.end(JSON.stringify(rows));
     });
   }
@@ -54,12 +54,12 @@ var handleRequest = function(request, response) {
   else if (request.method === "POST") {
     console.log("Got into the POST request loop!");
     request.addListener("data", function(data) {
-      var parsedData = JSON.parse(data);
-      server.db("INSERT into messages (username, message, room, time) values (" + "'" + parsedData.username + "', " + "'" + parsedData.message + "', " + "'" + parsedData.room + "', " + "'" +parsedData.time + "'" + ");");
+      server.post(data, function(){
+        response.writeHead(201, headers);
+        response.end("Success");
+        console.log("Finished the POST request loop!");
+      });
     });
-    response.writeHead(201, headers);
-    response.end("Success");
-    console.log("Finished the POST request loop!");
   }
 
   else {
